@@ -33,6 +33,10 @@ if [ -n "$GIT_URL" ]; then
     GIT_URL="$GIT_URL"
 elif [ -n "${!url_var}" ]; then
     GIT_URL="${!url_var}"
+elif git ls-remote --heads git@github.com:cawilliamson/qubes-$COMPONENT.git xfs >/dev/null 2>&1; then
+    GIT_URL=git@github.com:cawilliamson/qubes-$COMPONENT.git
+    BRANCH=xfs
+    NO_CHECK=1
 else
     GIT_URL=$GIT_BASEURL/$GIT_PREFIX$COMPONENT$GIT_SUFFIX
 fi
@@ -42,7 +46,8 @@ fi
 
 branch_var="BRANCH_${COMPONENT//-/_}"
 
-if [ -n "${!branch_var}" ]; then
+echo $BRANCH
+if [ -n "${!branch_var}" ] && [ "$BRANCH" != "xfs" ]; then
     BRANCH="${!branch_var}"
 fi
 
