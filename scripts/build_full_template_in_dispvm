@@ -19,7 +19,7 @@ prepareAndMountImage() {
         exit 1
     fi
     truncate -s ${IMAGE_SIZE} "${IMAGE_NAME}"
-    mkfs.ext4 -F -L BUILDER "${IMAGE_NAME}"
+    mkfs.xfs -f -L BUILDER "${IMAGE_NAME}"
     IMAGE_DEV=$(sudo losetup --find --show "$IMAGE_NAME")
     udevadm settle
     mkdir -p mnt
